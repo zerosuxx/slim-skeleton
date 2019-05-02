@@ -1,1 +1,1 @@
-# slim-skeleton
+# slim-app
