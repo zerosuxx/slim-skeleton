@@ -1,20 +1,38 @@
 {
-    "name": "emartech/main-menuu-service",
-    "description": "Slim ",
-    "license": "UNLICENSED",
+    "name": "zerosuxx/slim-skeleton",
+    "description": "Simple Slim 4.0 Skeleton Application",
+    "license": "MIT",
     "require": {
-        "php": ">=7.1",
-        "slim/slim": "4.0.0-alpha",
+        "php": ">=7.3",
+        "slim/slim": "4.0.0-beta",
         "zendframework/zend-diactoros": "^2.1",
-        "cakephp/orm": "dev-master",
         "php-di/php-di": "^6.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.2",
+        "slevomat/coding-standard": "^5.0",
+        "phpstan/phpstan": "^0.11.12"
     },
     "autoload": {
         "psr-4": {
             "App\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "tests/"
+        }
+    },
+    "scripts": {
+        "check-style": "./vendor/bin/phpcs --standard=ruleset.xml -ps --colors",
+        "analyze": "./vendor/bin/phpstan analyze -l 5 src/ config/ public/",
+        "test": "./vendor/bin/phpunit --do-not-cache-result",
+        "fix-style": "./vendor/bin/phpcbf -p --standard=ruleset.xml",
+        "cat": [
+            "@check-style",
+            "@analyze",
+            "@test"
+        ]
     }
 }
