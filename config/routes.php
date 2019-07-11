@@ -1,8 +1,8 @@
 <?php
 
-use App\Action\HealthCheckAction;
+use App\Action\IndexAction;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 
 return static function (RouteCollectorProxyInterface $router) {
-    $router->get('/healthcheck', HealthCheckAction::class);
+    $router->get('/', IndexAction::class);
 };
