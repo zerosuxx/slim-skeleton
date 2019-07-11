@@ -22,8 +22,7 @@ class IntegrationTestCase extends TestCase
     protected function getApplication(): App
     {
         return (new AppBuilder(\dirname(__DIR__, 2) . '/config'))
-            ->withContainer()
-            ->withRoutes()
+            ->withConfigs()
             ->build();
     }
 

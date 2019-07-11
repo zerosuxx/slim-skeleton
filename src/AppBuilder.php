@@ -5,7 +5,6 @@ namespace App;
 use Psr\Container\ContainerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
-use Slim\Middleware\ErrorMiddleware;
 
 class AppBuilder
 {
@@ -16,19 +15,14 @@ class AppBuilder
     private $configDir;
 
     /**
-     * @var callable
-     */
-    private $routes;
-
-    /**
      * @var ContainerInterface|null
      */
     private $container;
 
     /**
-     * @var callable
+     * @var array<callable>
      */
-    private $errorHandler;
+    private $initializers = [];
 
 
     public function __construct(string $configDir)
@@ -36,53 +30,71 @@ class AppBuilder
         $this->configDir = $configDir;
     }
 
-    public function withRoutes(): self
+    public function withContainer(ContainerInterface $container): self
     {
-        $this->routes = require $this->configDir . '/routes.php';
-
-        return $this;
-    }
-
-    public function withContainer(?ContainerInterface $container = null): self
-    {
-        if ($container === null) {
-            $container = require $this->configDir . '/container.php';
-        }
-
         $this->container = $container;
 
         return $this;
     }
 
-    public function withErrorHandler(): self
+    public function withRoutesConfig(string $file = 'routes.php'): self
     {
-        $this->errorHandler = static function (App $app): void {
-            $callableResolver = $app->getCallableResolver();
-            $responseFactory = $app->getResponseFactory();
-            $errorMiddleware = new ErrorMiddleware($callableResolver, $responseFactory, true, true, true);
-            $app->add($errorMiddleware);
-        };
+        $this->initializers['routes'] = $this->requireFile($file);
+
+        return $this;
+    }
+
+    public function withMiddlewaresConfig(string $file = 'middlewares.php'): self
+    {
+        $this->initializers['middlewares'] = $this->requireFile($file);
+
+        return $this;
+    }
+
+    public function withContainerConfig(string $file = 'container.php'): self
+    {
+        $container = $this->requireFile($file);
+
+        $this->withContainer($container);
+
+        return $this;
+    }
+
+    public function withConfigs(): self
+    {
+        $this
+            ->withRoutesConfig()
+            ->withContainerConfig()
+            ->withMiddlewaresConfig();
 
         return $this;
     }
 
     public function build(): App
     {
-        $app = AppFactory::create(null, $this->container);
+        $container = clone $this->container;
 
-        $this->apply($app, $this->routes);
-        $this->apply($app, $this->errorHandler);
+        $app = AppFactory::create(null, $container);
+
+        $this->applyInitializers($app, $this->initializers);
 
         return $app;
     }
 
-    private function apply(App $app, ?callable $callback = null): void
+    private function applyInitializers(App $app, array $initializers): void
     {
-        if (!$callback) {
-            return;
+        foreach ($initializers as $initializer) {
+            $initializer($app);
         }
+    }
 
-        $callback($app);
+    /**
+     * @param string $file
+     * @return callable|array|object
+     */
+    private function requireFile(string $file)
+    {
+        return require $this->configDir . DIRECTORY_SEPARATOR . $file;
     }
 
 }

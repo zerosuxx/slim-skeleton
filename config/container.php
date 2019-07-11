@@ -2,4 +2,8 @@
 
 use DI\Container;
 
-return new Container();
+$container = new Container();
+
+$container->set('config', require __DIR__ . '/config.php');
+
+return $container;
