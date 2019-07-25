@@ -3,6 +3,22 @@ services:
   app:
     build: .
     volumes:
-      - ./:/app
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./:/var/www/html
     ports:
-      - 8080:8080
+      - 8080:80
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
