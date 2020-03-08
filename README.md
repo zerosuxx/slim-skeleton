@@ -11,3 +11,7 @@
 ## run
 
 * `make up`
+
+## create new project
+
+* `composer create-project zerosuxx/slim-skeleton example-app`
