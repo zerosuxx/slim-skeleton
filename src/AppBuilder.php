@@ -74,9 +74,7 @@ class AppBuilder
 
     public function build(): App
     {
-        $container = clone $this->container;
-
-        $app = AppFactory::create(null, $container);
+        $app = AppFactory::create(null, $this->container);
 
         $this->applyInitializers($app, $this->initializers);
 
