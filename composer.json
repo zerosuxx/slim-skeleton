@@ -3,7 +3,7 @@
     "description": "Simple Slim 4 Skeleton Application",
     "license": "MIT",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "ext-json": "*",
         "slim/slim": "^4.7.0",
         "laminas/laminas-diactoros": "^2.5",

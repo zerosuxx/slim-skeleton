@@ -2,7 +2,7 @@
 
 ## requirements
 
-* `php >= 7.3`
+* `php >= 7.4`
 
 ## install
 
