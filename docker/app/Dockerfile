@@ -13,6 +13,8 @@ RUN apk add --update --no-cache \
 
 RUN rm -rf /tmp/* /var/cache/apk/*
 
+RUN docker-php-ext-install opcache
+
 RUN curl -o /usr/local/bin/composer -L https://github.com/composer/composer/releases/download/${COMPOSER_VERSION}/composer.phar \
     && chmod +x /usr/local/bin/composer
 
