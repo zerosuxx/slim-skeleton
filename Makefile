@@ -1,5 +1,7 @@
 run_docker=docker-compose run --rm app
 
+.PHONY: test
+
 default: help
 
 help: ## Show this help

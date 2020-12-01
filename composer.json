@@ -22,7 +22,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\": "tests/"
+            "Test\\": "test/"
         }
     },
     "scripts": {

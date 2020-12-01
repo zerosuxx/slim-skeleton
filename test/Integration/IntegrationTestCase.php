@@ -3,12 +3,10 @@
 namespace Test\Integration;
 
 use App\AppBuilder;
+use Laminas\Diactoros\ServerRequestFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
-use Slim\Factory\ServerRequestCreatorFactory;
-use Zend\Diactoros\ServerRequestFactory;
 
 /**
  * Class IntegrationTestCase
@@ -21,7 +19,7 @@ class IntegrationTestCase extends TestCase
 
     protected function getApplication(): App
     {
-        return (new AppBuilder(\dirname(__DIR__, 2) . '/config'))
+        return (new AppBuilder(dirname(dirname(__DIR__)) . '/config'))
             ->withConfigs()
             ->build();
     }
