@@ -1,8 +1,11 @@
 server {
     listen 80;
-    server_name slim;
+    server_name ${SERVER_NAME};
 
-    root /var/www/html/public;
+    fastcgi_hide_header X-Powered-By;
+    fastcgi_buffering off;
+
+    root ${PUBLIC_DIR};
     index index.php;
 
     access_log /dev/stdout;
@@ -15,7 +18,7 @@ server {
     location ~ \.php$ {
         try_files $uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass app:9000;
+        fastcgi_pass ${FPM_HOST};
         fastcgi_index index.php;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;

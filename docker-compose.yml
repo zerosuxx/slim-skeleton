@@ -1,17 +1,25 @@
 version: '3.3'
 services:
   app:
-    build: ./docker/app/
+    build:
+      dockerfile: ./docker/app/Dockerfile
+      context: .
     volumes:
       - ./:/var/www/html
     networks:
       - app-network
 
   nginx:
-    image: nginx:latest
+    build:
+      dockerfile: ./docker/nginx/Dockerfile
+      context: .
+    environment:
+      SERVER_NAME: 'slim-app'
+      PUBLIC_DIR: '/var/www/html/public'
+      FPM_HOST: 'app:9000'
     volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./:/var/www/html
+      - ./docker/nginx/app.conf.template:/etc/nginx/templates/default.conf.template
+      - ./public:/var/www/html/public
     ports:
       - 8080:80
     depends_on:
