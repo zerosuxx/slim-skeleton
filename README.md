@@ -1,4 +1,4 @@
-# Simple Slim 4.4 Skeleton Application
+# Simple Slim 4.x Skeleton Application
 
 ## requirements
 

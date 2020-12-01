@@ -54,8 +54,11 @@ fix-style: ## Check code style with php codesniffer
 analyze: ## Analyze code
 	$(run_docker) composer analyze
 
+test: ## Run tests
+	$(run_docker) composer test
+
 cat: ## Check code style & Analyze & Test
 	$(run_docker) composer cat
 
-test: ## Run tests
-	$(run_docker) composer test
+phpunit-migrate: ## Migrate phpunit config file
+	$(run_docker) composer phpunit-migrate

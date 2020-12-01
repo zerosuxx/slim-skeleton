@@ -11,21 +11,14 @@ use Slim\Factory\AppFactory;
 class AppBuilder
 {
 
-    /**
-     * @var string
-     */
-    private $configDir;
+    private string $configDir;
 
-    /**
-     * @var ContainerInterface|null
-     */
-    private $container;
+    private ?ContainerInterface $container;
 
     /**
      * @var array<callable>
      */
-    private $initializers = [];
-
+    private array $initializers = [];
 
     public function __construct(string $configDir)
     {
