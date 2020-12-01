@@ -8,15 +8,14 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\App;
 
-class IndexAction implements RequestHandlerInterface
+class HealthCheckAction implements RequestHandlerInterface
 {
 
     // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new JsonResponse(['Slim' => App::VERSION]);
+        return new JsonResponse(['success' => true]);
     }
     // phpcs:enable
 

@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-use App\Action\IndexAction;
+use App\Action\HealthCheckAction;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 
 return static function (RouteCollectorProxyInterface $router): void {
-    $router->get('/', IndexAction::class);
+    $router->get('/healthcheck', HealthCheckAction::class);
 };
